@@ -1,59 +1,59 @@
-import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
-import { expect } from "chai";
-import { BigNumber } from "ethers";
+import dotenv from "dotenv"
+import { expect, use } from "chai";
+import { solidity } from 'ethereum-waffle';
+import { BigNumber, Contract, Wallet, Signer } from "ethers";
+import hre from "hardhat";
 import { ethers } from "hardhat";
 import { TableEvents } from "../typechain";
 
+use(solidity);
+dotenv.config({path: "../"});
+
+const PRIVATE_KEY = process.env.PRIVATE_KEY as string;
+
+// Arbitrum Rinkeby Testnet
+const contractAddressArbitrum = "0xB72ee475aB153De39bdD2A3c50508Ab8920AFdD7";
+// Optimism Kovan Testnet
+const contractAddressOptimism = "0x5FbDB2315678afecb367f032d93F642f64180aa3"
+
 describe("Registry", function () {
-  let registry: TableEvents;
-  let accounts: SignerWithAddress[];
+  it("log details of transaction on Arbitrum", async function () {
+    const query = "INSERT INTO fake_table_name (val1, val2, val3) VALUES (123, 'fizbazbuzz', true);"
 
-  beforeEach(async function () {
-    accounts = await ethers.getSigners();
-    const Factory = await ethers.getContractFactory("TableEvents");
-    registry = await Factory.deploy();
-    await registry.deployed();
-    // Manually call initialize because we are "deploying" the contract directly.
-    await registry.initialize("https://website.com/");
+    const provider = new ethers.providers.JsonRpcProvider('https://rinkeby.arbitrum.io/rpc');
+    const artifact = await hre.artifacts.readArtifact("TableEvents");
+    const wallet = new ethers.Wallet(
+      PRIVATE_KEY,
+      provider
+    );
 
+    const contract = new ethers.Contract(contractAddressArbitrum, artifact.abi, wallet);
+
+    const transactionResponse = await contract.storeData("fake_table_name", query);
+
+    const result = await transactionResponse.wait();
+    console.log(result);
+
+    await expect(transactionResponse).to.emit(contract, "DataStored").withArgs("fake_table_name", query);
   });
 
-  it("Should mint a new table", async function () {
-    const tx = await registry
-      .connect(accounts[4]) // Use connect to test that _anyone_ can mint
-      .safeMint(accounts[4].address);
-    const receipt = await tx.wait();
-    // Await for receipt and inspect events for token id etc.
-    const [event] = receipt.events ?? [];
-    expect(event.args!.tokenId).to.equal(BigNumber.from(0));
-    const balance = await registry.balanceOf(accounts[4].address);
-    expect(1).to.equal(Number(balance.toString()));
-    const totalSupply = await registry.totalSupply();
-    expect(1).to.equal(Number(totalSupply.toString()));
-  });
+  it("log details of transaction on Optimism", async function () {
+    const query = "INSERT INTO fake_table_name (val1, val2, val3) VALUES (123, 'fizbazbuzz', true);"
 
-  it("Should udpate the base URI", async function () {
-    let tx = await registry.setBaseURI("https://fake.com/");
-    await tx.wait();
+    const provider = new ethers.providers.JsonRpcProvider('https://rinkeby.arbitrum.io/rpc');
+    const artifact = await hre.artifacts.readArtifact("TableEvents");
+    const wallet = new ethers.Wallet(
+      PRIVATE_KEY,
+      provider
+    );
 
-    const target = accounts[4].address;
-    tx = await registry.safeMint(target);
-    await tx.wait();
-    const tokenURI = await registry.tokenURI(0);
-    expect(tokenURI).includes("https://fake.com/");
-  });
+    const contract = new ethers.Contract(contractAddressOptimism, artifact.abi, wallet);
 
-  it("Should be easy to await the transaction", async function () {
-    const mintAndReturnId = async (address: string): Promise<BigNumber> => {
-      const tx = await registry.safeMint(address);
-      const receipt = await tx.wait();
-      const [event] = receipt.events ?? [];
-      return event.args?.tokenId;
-    };
+    const transactionResponse = await contract.storeData("fake_table_name", query);
 
-    const target = accounts[4].address;
-    // Here's our nice awaitable function
-    const tokenId = await mintAndReturnId(target);
-    expect(tokenId).to.equal(BigNumber.from(0));
+    const result = await transactionResponse.wait();
+    console.log(result);
+
+    await expect(transactionResponse).to.emit(contract, "DataStored").withArgs("fake_table_name", query);
   });
 });
