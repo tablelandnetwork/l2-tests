@@ -152,7 +152,7 @@
             "src": "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol:81"
           },
           {
-            "contract": "TablelandTables",
+            "contract": "TableEvents",
             "label": "_tokenIdCounter",
             "type": "t_struct(Counter)2859_storage",
             "src": "contracts/Registry.sol:28"
@@ -379,7 +379,7 @@
             "src": "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol:81"
           },
           {
-            "contract": "TablelandTables",
+            "contract": "TableEvents",
             "label": "_tokenIdCounter",
             "type": "t_struct(Counter)2859_storage",
             "src": "contracts/Registry.sol:28"
@@ -606,13 +606,13 @@
             "src": "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol:81"
           },
           {
-            "contract": "TablelandTables",
+            "contract": "TableEvents",
             "label": "_tokenIdCounter",
             "type": "t_struct(Counter)2859_storage",
             "src": "contracts/Registry.sol:28"
           },
           {
-            "contract": "TablelandTables",
+            "contract": "TableEvents",
             "label": "_baseURIString",
             "type": "t_string_storage",
             "src": "contracts/Registry.sol:31"

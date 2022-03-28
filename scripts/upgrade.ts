@@ -4,7 +4,7 @@ const testnetProxy = "0x30867AD98A520287CCc28Cde70fCF63E3Cdb9c3C";
 const stagingProxy = "0x847645b7dAA32eFda757d3c10f1c82BFbB7b41D0";
 
 async function main() {
-  const Registry = await ethers.getContractFactory("TablelandTables");
+  const Registry = await ethers.getContractFactory("TableEvents");
   await upgrades.upgradeProxy(testnetProxy, Registry, {
     kind: "uups",
   });

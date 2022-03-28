@@ -1,10 +1,10 @@
 import { expect } from "chai";
 import { ethers, upgrades } from "hardhat";
-import type { TablelandTables } from "../typechain/index";
+import type { TableEvents } from "../typechain/index";
 
 describe("Proxy", function () {
   it(" Should be callable from deployed proxy contract", async function () {
-    const Factory = await ethers.getContractFactory("TablelandTables");
+    const Factory = await ethers.getContractFactory("TableEvents");
 
     const registry = (await upgrades.deployProxy(
       Factory,
@@ -12,7 +12,7 @@ describe("Proxy", function () {
       {
         kind: "uups",
       }
-    )) as TablelandTables;
+    )) as TableEvents;
     await registry.deployed();
 
     const totalSupply = await registry.totalSupply();
@@ -21,16 +21,16 @@ describe("Proxy", function () {
 
   it(" Should be able to deploy two proxy contracts with different baseURI", async function () {
     const [account] = await ethers.getSigners();
-    const Factory = await ethers.getContractFactory("TablelandTables");
+    const Factory = await ethers.getContractFactory("TableEvents");
 
     const reg1 = (await upgrades.deployProxy(Factory, ["https://one.com/"], {
       kind: "uups",
-    })) as TablelandTables;
+    })) as TableEvents;
     await reg1.deployed();
 
     const reg2 = (await upgrades.deployProxy(Factory, ["https://two.com/"], {
       kind: "uups",
-    })) as TablelandTables;
+    })) as TableEvents;
     await reg2.deployed();
 
     expect(reg1.address).to.not.equal(reg2.address);

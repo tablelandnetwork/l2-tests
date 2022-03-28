@@ -21,6 +21,11 @@ const config: HardhatUserConfig = {
     },
   },
   networks: {
+    arbitrum: {
+      url: "https://rinkeby.arbitrum.io/rpc",
+      accounts:
+        process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [],
+    },
     rinkeby: {
       url: `https://eth-rinkeby.alchemyapi.io/v2/${
         process.env.ALCHEMY_API_KEY ?? ""

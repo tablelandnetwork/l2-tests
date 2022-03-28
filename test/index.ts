@@ -2,19 +2,20 @@ import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
 import { expect } from "chai";
 import { BigNumber } from "ethers";
 import { ethers } from "hardhat";
-import { TablelandTables } from "../typechain";
+import { TableEvents } from "../typechain";
 
 describe("Registry", function () {
-  let registry: TablelandTables;
+  let registry: TableEvents;
   let accounts: SignerWithAddress[];
 
   beforeEach(async function () {
     accounts = await ethers.getSigners();
-    const Factory = await ethers.getContractFactory("TablelandTables");
+    const Factory = await ethers.getContractFactory("TableEvents");
     registry = await Factory.deploy();
     await registry.deployed();
     // Manually call initialize because we are "deploying" the contract directly.
     await registry.initialize("https://website.com/");
+
   });
 
   it("Should mint a new table", async function () {

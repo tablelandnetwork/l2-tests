@@ -3,10 +3,10 @@
 //
 // When running the script with `npx hardhat run <script>` you'll find the Hardhat
 // Runtime Environment's members available in the global scope.
-import { ethers, upgrades } from "hardhat";
+import { ethers } from "hardhat";
 
 async function main() {
-  const Registry = await ethers.getContractFactory("TablelandTables");
+  const Registry = await ethers.getContractFactory("TableEvents");
 
   // const testnet = await upgrades.deployProxy(
   //   Registry,
@@ -17,14 +17,17 @@ async function main() {
   // );
   // console.log("Testnet proxy deployed to:", testnet.address);
 
-  const staging = await upgrades.deployProxy(
-    Registry,
-    ["https://staging.tableland.network/tables/"],
-    {
-      kind: "uups",
-    }
-  );
-  console.log("Staging proxy deployed to:", staging.address);
+  // const staging = await upgrades.deployProxy(
+  //   Registry,
+  //   ["https://staging.tableland.network/tables/"],
+  //   {
+  //     kind: "uups",
+  //   }
+  // );
+
+  const registry = await Registry.deploy();
+  await registry.deployed();
+  console.log("Staging proxy deployed to:", registry.address);
 }
 
 // We recommend this pattern to be able to use async/await everywhere
