@@ -4,6 +4,7 @@
   "description": "On-chain ETH registry and client components for Tableland",
   "main": "typechain/index.js",
   "types": "typechain/index.d.ts",
+  "type": "module",
   "files": [
     "typechain/**/*.js?(.map)",
     "typechain/**/*.d.ts"
@@ -35,6 +36,7 @@
     "ethers": "^5.5.1"
   },
   "devDependencies": {
+    "@faker-js/faker": "^6.1.1",
     "@nomiclabs/hardhat-ethers": "^2.0.2",
     "@nomiclabs/hardhat-etherscan": "^2.1.8",
     "@nomiclabs/hardhat-waffle": "^2.0.1",
