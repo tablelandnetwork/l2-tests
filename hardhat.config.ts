@@ -43,16 +43,11 @@ const config: HardhatUserConfig = {
       accounts:
         process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [],
     },
-    moonriver: {
-      url: "https://api-moonbase.moonscan.io/api",
+    avalanche: {
+      url: "https://api.avax-test.network/ext/bc/C/rpc",
       accounts:
         process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [],
     },
-    avalanche: {
-      url: "https://api-testnet.snowtrace.io/api",
-      accounts:
-        process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [],
-    }
   },
   gasReporter: {
     enabled: process.env.REPORT_GAS !== undefined,
