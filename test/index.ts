@@ -14,7 +14,7 @@ const PRIVATE_KEY = process.env.PRIVATE_KEY as string;
 // Arbitrum Rinkeby Testnet
 const contractAddressArbitrum = "0xB72ee475aB153De39bdD2A3c50508Ab8920AFdD7";
 // Optimism Kovan Testnet
-const contractAddressOptimism = "0x5FbDB2315678afecb367f032d93F642f64180aa3"
+const contractAddressOptimism = "0x23C5e9D53CBAf6703839A503f0429C5D01796858";
 
 describe("Registry", function () {
   it("log details of transaction on Arbitrum", async function () {
@@ -40,7 +40,7 @@ describe("Registry", function () {
   it("log details of transaction on Optimism", async function () {
     const query = "INSERT INTO fake_table_name (val1, val2, val3) VALUES (123, 'fizbazbuzz', true);"
 
-    const provider = new ethers.providers.JsonRpcProvider('https://rinkeby.arbitrum.io/rpc');
+    const provider = new ethers.providers.JsonRpcProvider('https://kovan.optimism.io/');
     const artifact = await hre.artifacts.readArtifact("TableEvents");
     const wallet = new ethers.Wallet(
       PRIVATE_KEY,
