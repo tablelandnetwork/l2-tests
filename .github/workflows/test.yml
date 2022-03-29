@@ -6,6 +6,8 @@ on:
   pull_request:
     branches:
       - main
+env:
+  PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -43,8 +45,3 @@ jobs:
 
       - name: Coverage 🙈
         run: npx hardhat coverage
-
-      - name: Deploy 🚀
-        run: |
-          npx hardhat node &
-          npx hardhat run scripts/deploy.ts --network localhost
