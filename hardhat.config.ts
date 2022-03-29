@@ -21,25 +21,25 @@ const config: HardhatUserConfig = {
     },
   },
   networks: {
-    arbitrum: {
+    arbitrum: {// deployed
       url: "https://rinkeby.arbitrum.io/rpc",
       accounts:
         process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [],
     },
-    rinkeby: {
+    rinkeby: {// deployed
       url: `https://eth-rinkeby.alchemyapi.io/v2/${
         process.env.ALCHEMY_API_KEY ?? ""
       }`,
       accounts:
         process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [],
     },
-    optimism: {
+    optimism: {// deployed
       url: "https://kovan.optimism.io/",
       accounts:
         process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [],
     },
     polygon: {
-      url: "https://api-testnet.polygonscan.com/api",
+      url: "https://matic-mumbai.chainstacklabs.com",
       accounts:
         process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [],
     },
