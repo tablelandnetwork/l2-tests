@@ -46,6 +46,10 @@ const testFactory = async function (network: Network) {
 };
 
 describe("Registry", function () {
+  before(function () {
+    fakeDb.addTable();
+  });
+
   it("log details of transaction on Arbitrum", async function () {
     await testFactory({
       // Arbitrum Rinkeby Testnet

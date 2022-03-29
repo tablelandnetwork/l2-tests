@@ -120,16 +120,6 @@ module.exports = class FakeDatabase {
   }
 
   generateRandomStatement() {
-    /*
-    TODO: getting the below error, adding a work around for now...
-      TypeError: Cannot read properties of undefined (reading 'columns')
-        at FakeDatabase.generateInsertStatement (test/generateStatements.js:82:25)
-        at FakeDatabase.generateRandomStatement (test/generateStatements.js:141:21)
-        at testFactory (test/index.ts:32:24)
-        at Context.<anonymous> (test/index.ts:53:11)
-    */
-    return "INSERT INTO fake_table_name (val1, val2, val3) VALUES (123, 'fizbazbuzz', true);";
-
     const numero = faker.datatype.number(
       Math.floor(Math.log(this.tables.length + 5) * 5) + 1
     );
