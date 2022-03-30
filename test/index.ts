@@ -5,7 +5,7 @@ import { BigNumber, Contract, Wallet, Signer } from "ethers";
 import hre from "hardhat";
 import { ethers } from "hardhat";
 import { TableEvents } from "../typechain";
-import { log } from "../logTransaction";
+import log from "../logTransaction";
 
 // TODO: we may want to write this file as Typescript
 // @ts-ignore
@@ -60,9 +60,11 @@ const testFactory = async function (network: Network) {
   await log({
     network: network,
     duration: endTime - startTime,
-    testDate: new Date(),
-    result: result,
-    gasEstimate: estimateGasResponse.toString()
+    testDate: new Date().getTime(),
+    transactionId: result.transactionHash,
+    gasEstimate: estimateGasResponse.toString(),
+    gasUsed: result.gasUsed.toString(),
+    result: JSON.stringify(result),
   });
 };
 

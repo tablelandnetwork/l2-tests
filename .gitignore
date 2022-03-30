@@ -13,3 +13,4 @@ artifacts
 
 #Openzeppelin files
 .openzeppelin/unknown-*1337.json
+test_runs.db
