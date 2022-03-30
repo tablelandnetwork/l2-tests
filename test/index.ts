@@ -5,6 +5,7 @@ import { BigNumber, Contract, Wallet, Signer } from "ethers";
 import hre from "hardhat";
 import { ethers } from "hardhat";
 import { TableEvents } from "../typechain";
+import { log } from "../logTransaction";
 
 // TODO: we may want to write this file as Typescript
 // @ts-ignore
@@ -26,6 +27,7 @@ interface Network {
 const fakeDb = new FakeDatabase();
 
 const testFactory = async function (network: Network) {
+  const startTime = Date.now();
   const query = fakeDb.generateRandomStatement();
 
   const provider = new ethers.providers.JsonRpcProvider(network.rpc);
@@ -42,16 +44,26 @@ const testFactory = async function (network: Network) {
   const estimateGasResponse = await contract.estimateGas.storeData.apply(contract.estimateGas, args);
   console.log(`${network.name} Gas Estimate: ${estimateGasResponse.toString()}`);
 
-  /*const transactionResponse = await contract.storeData.apply(contract, args);
+  const transactionResponse = await contract.storeData.apply(contract, args);
 
   const result = await transactionResponse.wait();
 
+  const endTime = Date.now();
   // TODO: add a logger that saves this data
-  //console.log(result);
   console.log(`${network.name} Gas Used: ${result.gasUsed.toString()}`);
+  console.log(result);
+
+  console.log('Time for transaction: ' + (endTime - startTime));
 
   await expect(transactionResponse).to.emit(contract, "DataStored").withArgs("fake_table_name", query);
-  */
+
+  await log({
+    network: network,
+    duration: endTime - startTime,
+    testDate: new Date(),
+    result: result,
+    gasEstimate: estimateGasResponse.toString()
+  });
 };
 
 describe("Registry", function () {
