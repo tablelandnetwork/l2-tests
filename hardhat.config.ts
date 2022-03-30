@@ -38,18 +38,18 @@ const config: HardhatUserConfig = {
       accounts:
         process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [],
     },
-    polygon: {
+    polygon: {// deployed
       url: "https://matic-mumbai.chainstacklabs.com",
       accounts:
         process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [],
     },
-    moonriver: {
-      url: "https://api-moonbase.moonscan.io/api",
+    avalanche: {// deployed
+      url: "https://api.avax-test.network/ext/bc/C/rpc",
       accounts:
         process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [],
     },
-    avalanche: {
-      url: "https://api-testnet.snowtrace.io/api",
+    zksync: {// NOT deployed, need to configure a plugin and make sure the smart contract still makes sense
+      url: "https://zksync2-testnet.zksync.dev",
       accounts:
         process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [],
     }

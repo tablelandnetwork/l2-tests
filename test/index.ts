@@ -46,6 +46,10 @@ const testFactory = async function (network: Network) {
 };
 
 describe("Registry", function () {
+  before(function () {
+    fakeDb.addTable();
+  });
+
   it("log details of transaction on Arbitrum", async function () {
     await testFactory({
       // Arbitrum Rinkeby Testnet
@@ -56,7 +60,7 @@ describe("Registry", function () {
 
   it("log details of transaction on Optimism", async function () {
     await testFactory({
-      // Arbitrum Rinkeby Testnet
+      // Optimism Rinkeby Testnet
       contract: "0x23C5e9D53CBAf6703839A503f0429C5D01796858",
       rpc: "https://kovan.optimism.io/"
     });
@@ -64,9 +68,17 @@ describe("Registry", function () {
 
   it("log details of transaction on Polygon", async function () {
     await testFactory({
-      // Arbitrum Rinkeby Testnet
+      // Polygon Rinkeby Testnet
       contract: "0xB72ee475aB153De39bdD2A3c50508Ab8920AFdD7",
       rpc: "https://matic-mumbai.chainstacklabs.com"
+    });
+  });
+
+  it("log details of transaction on Avalanche", async function () {
+    await testFactory({
+      // Avalanche Rinkeby Testnet
+      contract: "0xB72ee475aB153De39bdD2A3c50508Ab8920AFdD7",
+      rpc: "https://api.avax-test.network/ext/bc/C/rpc"
     });
   });
 });
