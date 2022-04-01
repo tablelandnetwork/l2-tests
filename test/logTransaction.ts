@@ -12,8 +12,6 @@ db.run(
       gateway text, 
       testedAt integer,
       timeToConfirm integer,       
-      gasEstimate text, 
-      gasUsed text, 
       result text
     );
   `
@@ -31,8 +29,6 @@ function logTransaction(data: {
   duration: number;
   testDate: number;
   transactionId: string;
-  gasUsed: number;
-  gasEstimate: string;
   result: string;
 }) {
   const statement = `INSERT INTO TransactionLog 
@@ -43,13 +39,11 @@ function logTransaction(data: {
       gateway, 
       testedAt,
       timeToConfirm,
-      gasEstimate, 
-      gasUsed, 
       result
     ) VALUES (
-      ?, ?, ?, ?, ?, ?, ?, ?, ?
+      ?, ?, ?, ?, ?, ?, ?
     )`;
-  console.log(statement);
+  // console.log(statement);
   const prepped = db.prepare(statement);
   prepped.run(
     data.transactionId,
@@ -58,8 +52,6 @@ function logTransaction(data: {
     data.network.rpc,
     data.testDate,
     data.duration,
-    data.gasEstimate,
-    data.gasUsed,
     data.result
   );
 }

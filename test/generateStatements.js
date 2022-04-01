@@ -157,4 +157,4 @@ module.exports = class FakeDatabase {
 
     return statements;
   }
-}
+};

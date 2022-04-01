@@ -11,6 +11,9 @@ import "solidity-coverage";
 dotenv.config();
 
 const config: HardhatUserConfig = {
+  mocha: {
+    timeout: 120000
+  },
   solidity: {
     version: "0.8.4",
     settings: {
