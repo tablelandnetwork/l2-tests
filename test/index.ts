@@ -24,8 +24,6 @@ interface Network {
 
 const fakeDb = new FakeDatabase();
 
-
-
 const testFactory = async function (network: Network) {
   const queries = fakeDb.generateOrderedStatements(5);
   async function SendTxAwaitResponse(query: any) {

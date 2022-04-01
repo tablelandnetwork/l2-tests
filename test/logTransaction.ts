@@ -12,7 +12,8 @@ db.run(
       gateway text, 
       testedAt integer,
       timeToConfirm integer,       
-      result text
+      result text,
+      usd_estimate text
     );
   `
 );
