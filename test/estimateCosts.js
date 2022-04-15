@@ -9,7 +9,10 @@ const arbitrumL1TxFee = 2356.9625176;
 const arbitrumGasPrice = 0.010247663;
 
 async function main() {
-  const paid = [];
+  const paid = {
+    Arbitrum: [],
+    Optimism: [],
+  };
 
   const db = new sqlite.Database("./test_runs.db");
 
@@ -39,7 +42,7 @@ async function main() {
             );
             break;
         }
-        paid.push(price.priceInUSD);
+        paid[row.network].push(price.priceInUSD);
         db.run(`UPDATE TransactionLog 
           SET usd_estimate='${price.priceInUSD}'
           WHERE transactionId='${row.transactionId}' 
@@ -57,7 +60,10 @@ async function main() {
     const total = grades.reduce((acc, c) => acc + c, 0);
     return total / grades.length;
   }
-  console.log(`Average cost: ${getAvg(paid)}`);
+  console.log(`
+    Optimism average cost: ${getAvg(paid.Optimism)}
+    Arbitrum average cost: ${getAvg(paid.Arbitrum)}    
+  `);
 }
 main();
 
@@ -78,9 +84,7 @@ function OptimismCalculation(l1Fee, l2GasUsed) {
 }
 
 function ArbitrumCalculation(l1Calldata, gasUsed) {
-  console.log(l1Calldata, gasUsed);
   const l1fee = arbitrumL1TxFee + l1Calldata * l1gasPrice;
-  console.log("L1 fee: ", l1fee);
   const l2fee = arbitrumGasPrice * gasUsed;
   const priceInGwei = l1fee + l2fee;
   return PriceDenominations(priceInGwei);

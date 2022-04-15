@@ -1,133 +1,19 @@
-# @tableland/eth
+## Step 1, get testnet funds
 
-[![GitHub license](https://img.shields.io/github/license/tablelandnetwork/eth-tableland.svg)](./LICENSE)
-[![GitHub package.json version](https://img.shields.io/github/package-json/v/tablelandnetwork/eth-tableland.svg)](./package.json)
-[![Release](https://img.shields.io/github/release/tablelandnetwork/eth-tableland.svg)](https://github.com/tablelandnetwork/eth-tableland/releases/latest)
-[![standard-readme compliant](https://img.shields.io/badge/standard--readme-OK-green.svg)](https://github.com/RichardLitt/standard-readme)
 
-![Tests](https://github.com/tablelandnetwork/eth-tableland/workflows/Test/badge.svg)
+## Step 2, deploy contract
 
-> On-chain ETH registry and client components for Tableland
+You can do this on your own if you like. At the moment, we already have 
+a contract deployed and they are in the test file.
 
-# Table of Contents
+## Step 2, run transactions
 
-- [Background](#background)
-- [Development](#development)
-- [Maintainers](#maintainers)
-- [Contributing](#contributing)
-- [License](#license)
 
-# Background
-
-This is the proof of concept on-chain ETH registry and client components
-for Tableland. This is the first pass, and is subject to wild changes
-without notice!
-
-# Development
-
-Get started with installing and building the project:
-
-```shell
-npm install
-npx hardhat compile
-npm run build
 ```
-
-Try running some of the following tasks:
-
-```shell
-npx hardhat accounts
-npx hardhat compile
-npx hardhat clean
+npm install
 npx hardhat test
-npx hardhat node
-npx hardhat help
-REPORT_GAS=true npx hardhat test
-npx hardhat coverage
-npx hardhat run scripts/deploy.ts
-TS_NODE_FILES=true npx ts-node scripts/deploy.ts
-npx eslint '**/*.{js,ts}'
-npx eslint '**/*.{js,ts}' --fix
-npx prettier '**/*.{json,sol,md}' --check
-npx prettier '**/*.{json,sol,md}' --write
-npx solhint 'contracts/**/*.sol'
-npx solhint 'contracts/**/*.sol' --fix
+node test/estimateCosts.js
 ```
+Then open of the test_runs.db (an SQLite database) to view the results. The simplest way I’ve seen to the this is using this app: https://sqliteviewer.app/
 
-## Building the client
-
-You can build the Typescript client locally:
-
-```shell
-npm install
-npx hardhat compile
-npm run build
-```
-
-## Extacting the ABI and Bytecode
-
-Can you grab the assets you need by compiling and then using some jq magic:
-
-### ABI
-
-```shell
-cat artifacts/contracts/Registry.sol/TableEvents.json | jq '.abi' > abi.json
-```
-
-### Bytecode
-
-```shell
-cat artifacts/contracts/Registry.sol/TableEvents.json | jq -r '.bytecode' > bytecode.bin
-```
-
-### Generate the Go client!
-
-You can use the above `abi.json` to build the Go client:
-
-```shell
-mkdir gobuild
-abigen --abi ./abi.json --bin ./bytecode.bin --pkg contracts --out gobuild/Registry.go
-```
-
-### Bytecode
-
-To extract just the raw bytecode so you can deploy it in Go tests (to a locally running chain):
-
-```shell
-cat artifacts/contracts/Registry.sol/Registry.json | jq -r '.bytecode' > bytecode.bin
-```
-
-## Etherscan verification
-
-To try out Etherscan verification, you first need to deploy a contract to an Ethereum network that's supported by Etherscan, such as Ropsten.
-
-In this project, copy the .env.example file to a file named .env, and then edit it to fill in the details. Enter your Etherscan API key, your Rinkeby node URL (e.g., from Alchemy), and the private key of the account which will send the deployment transaction. With a valid .env file in place, first deploy your contract:
-
-```shell
-hardhat run --network rinkeby scripts/deploy.ts
-```
-
-Then, copy the deployment address and paste it in to replace `DEPLOYED_CONTRACT_ADDRESS` in this command:
-
-```shell
-npx hardhat verify --network rinkeby DEPLOYED_CONTRACT_ADDRESS
-```
-
-## Performance optimizations
-
-For faster runs of your tests and scripts, consider skipping ts-node's type checking by setting the environment variable `TS_NODE_TRANSPILE_ONLY` to `1` in hardhat's environment. For more details see [the documentation](https://hardhat.org/guides/typescript.html#performance-optimizations).
-
-# Maintainers
-
-[@carsonfarmer](https://github.com/carsonfarmer)
-
-# Contributing
-
-PRs accepted.
-
-Small note: If editing the README, please conform to the
-[standard-readme](https://github.com/RichardLitt/standard-readme) specification.
-
-# License
-
-MIT AND Apache-2.0, © 2021-2022 Tableland Network Contributors
+The attached file is the result of a few rounds of my own testing. Feel free to open it using the above app and look into. 
